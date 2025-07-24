@@ -1,0 +1,318 @@
+#cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(187, 134, 252, 0.3) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: transform 0.1s ease-out, background 0.2s ease-out;
+    filter: blur(30px);
+}
+
+#cursor-glow:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px 5px #fff, 0 0 30px 15px #bb86fc;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.animated-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(187, 134, 252, 0.15) 0%, transparent 35%),
+                linear-gradient(45deg, rgba(187, 134, 252, 0.2) 0%, transparent 50%),
+                linear-gradient(-45deg, rgba(187, 134, 252, 0.2) 0%, transparent 50%);
+    animation: droplet-flow 20s linear infinite;
+}
+
+@keyframes droplet-flow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animated-bg::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    animation: light-beam 10s linear infinite;
+}
+
+@keyframes light-beam {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+header {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    color: #e0e0e0;
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category {
+    margin: 0 1.5rem;
+    text-decoration: none;
+    color: #bb86fc;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.category:hover, .category.active {
+    color: #fff;
+}
+
+#news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.news-article {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s forwards;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.news-article:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.article-image-container {
+    height: 200px;
+    overflow: hidden;
+}
+
+.lazy-load {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.lazy-load.loaded {
+    opacity: 1;
+}
+
+.preview-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.news-article:hover .preview-container {
+    opacity: 1;
+    pointer-events: all;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    padding: 0.5rem;
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #333;
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+    border-right: none;
+}
+
+#search-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #333;
+    background-color: #bb86fc;
+    color: #121212;
+    cursor: pointer;
+    border-left: none;
+}
+
+#headline-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #1f1f1f;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+
+#current-headline {
+    position: relative;
+    text-align: center;
+    flex-grow: 1;
+    overflow: hidden;
+    height: 300px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#current-headline .headline-content {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+#current-headline .headline-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: transform 0.5s ease-in-out;
+}
+
+#current-headline.tile-reveal .headline-bg {
+    transform: scale(1.1);
+}
+
+#current-headline.fade-out {
+    opacity: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    animation: fadeUp 0.5s ease-in-out;
+}
+
+.slider-btn {
+    background: none;
+    border: none;
+    color: #bb86fc;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+footer {
+    background-color: #1f1f1f;
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social-links a {
+    margin: 0 1rem;
+    color: #bb86fc;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #fff;
+}
+
+.news-article img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+}
