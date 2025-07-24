@@ -1,14 +1,18 @@
 const newsContainer = document.getElementById('news-container');
-const apiKey = '4f648e11d8a547a4a29911d6d6d197ab'; // Replace with your actual API key
+const apiKey = 'cb077872ec8b7c04aee0a3829663ad3d'; // Replace with your actual API key
 const defaultCategory = 'technology';
 let currentCategory = defaultCategory;
 let currentQuery = '';
 
 function getApiUrl() {
+    const baseUrl = 'https://gnews.io/api/v4/';
+    const lang = 'en';
+    const max = 10; // GNews allows setting a max number of articles
+
     if (currentQuery) {
-        return `https://newsapi.org/v2/everything?q=${currentQuery}&apiKey=${apiKey}`;
+        return `${baseUrl}search?q=${encodeURIComponent(currentQuery)}&lang=${lang}&max=${max}&apikey=${apiKey}`;
     }
-    return `https://newsapi.org/v2/top-headlines?country=us&category=${currentCategory}&apiKey=${apiKey}`;
+    return `${baseUrl}top-headlines?lang=${lang}&topic=${currentCategory}&max=${max}&apikey=${apiKey}`;
 }
 
 async function fetchNews() {
